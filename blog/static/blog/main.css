@@ -5,7 +5,8 @@ body {
   }
   
   h1, h2, h3, h4, h5, h6 {
-    color: #0a0a0a;
+    color: #0f0a0a;/*#0a0a0a*/
+    font-family: Arial, Helvetica, sans-serif; /*remove this line if some error occurs */
   }
   
   ul {
@@ -13,35 +14,38 @@ body {
   }
   
   .bg-steel {
-    background-color: #00c3ff;
+    background-color:#f04848 /*#00c3ff*/;
   }
   
   .site-header .navbar-nav .nav-link {
     color: #020302;
   }
   
-  .site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
+  .navbar-nav .nav-link:hover {
+    color: /*#ffffff*/#950303;
   }
-  
+  .site-header:hover{/*remove this block and add .site-header to above*/
+    color: #0fc4f6;
+  }
   .site-header .navbar-nav .nav-link.active {
     font-weight: 500;
   }
   
-  .content-section {
-    background:#ececec;
+  .content-section { /* posts */
+    background:/*#ececec*/transparent;
     padding: 10px 20px;
-    border: 1px solid #080404;
-    border-radius: 3px;
+    border: 4px solid #080404;/* 1px solid #080404*/
+    border-radius: 15px; /* 3px */
     margin-bottom: 20px;
+    color: #dae8ec; /*remove this line */
   }
   
   .article-title {
-    color: #444444;
+    color: /*#444444*/#1aee8b;/*title of post .. Blog 1 , .. */
   }
   
-  a.article-title:hover {
-    color: #428bca;
+  a.article-title:hover {/* when cursor hovers over article title*/
+    color: /*#428bca*/#aa199e;
     text-decoration: none;
   }
   
