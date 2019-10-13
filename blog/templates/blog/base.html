@@ -13,16 +13,16 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type ="text/css" href = "{% static 'blog/main.css' %}">
     {% if title %}
-        <title> Django Blog - {{ title }} </title> 
+        <title> Cue - {{ title }} </title> 
     {% else %}
-        <title> Django Blog </title> 
+        <title> Cue </title> 
     {% endif %}    
 </head>
-<body style="background-image: url({% static 'blog/bgimg.gif' %}); background-size:100%;">
+<body style="background-image: url({% static 'blog/welcome.jpeg' %}); background-size:100%;  background-repeat: no-repeat;background-attachment: fixed;">
         <header class="site-header">
                 <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                   <div class="container">
-                    <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Django Blog</a>
+                    <a class="navbar-brand mr-4" href="{% url 'blog-home' %}">Cue</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
@@ -34,6 +34,7 @@
                       <!-- Navbar Right Side -->
                       <div class="navbar-nav">
                       {% if user.is_authenticated %}
+                      <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
                       <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                       <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                       {% else %}
