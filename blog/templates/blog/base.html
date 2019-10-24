@@ -18,7 +18,7 @@
         <title> Cue </title> 
     {% endif %}    
 </head>
-<body style="background-image: url({% static 'blog/welcome.jpeg' %}); background-size:100%;  background-repeat: no-repeat;background-attachment: fixed;">
+<body style="background-image: url({% static 'blog/background.jpg' %}); background-size:100%;  background-repeat: no-repeat;background-attachment: fixed;">
         <header class="site-header">
                 <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                   <div class="container">
@@ -30,6 +30,8 @@
                       <div class="navbar-nav mr-auto">     
                         <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+                        <a class="nav-item nav-link" href="#">Accounts</a>
+                        
                       </div>
                       <!-- Navbar Right Side -->
                       <div class="navbar-nav">

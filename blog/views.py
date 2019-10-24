@@ -2,6 +2,7 @@ from django.shortcuts import render
 from .models import Post
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from PIL import Image
 def home(request):
     context = {
         'posts':Post.objects.all()
@@ -21,15 +22,16 @@ class PostDetailView(DetailView):
     
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
-    fields = ['title','content']
+    fields = ['title','content','image']#remove image
 
-    def form_valid(self,form):#setting the author to the logged in
+    def form_valid(self,form):
+        #setting the author to the logged in
         form.instance.author = self.request.user
         return super().form_valid(form)
 
 class PostUpdateView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title','content']
+    fields = ['title','content','image']
 
     def form_valid(self,form):#setting the author to the logged in
         form.instance.author = self.request.user

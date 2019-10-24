@@ -1,6 +1,9 @@
 from django.urls import path
 from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('',views.welcome,name='cue'),#remove this line just checking something
     path('home/',PostListView.as_view(),name='blog-home'),#homepage now
@@ -15,3 +18,7 @@ urlpatterns = [
     
     
 ]
+
+if settings.DEBUG:
+    urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    urlpatterns +=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
