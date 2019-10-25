@@ -1,8 +1,14 @@
-from django.shortcuts import render
-from .models import Post
+from django.shortcuts import render,redirect
+from .models import Post,Comment
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from PIL import Image
+from .forms import CommentForm
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Permission, User
+from django.contrib.auth.decorators import login_required, permission_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 def home(request):
     context = {
         'posts':Post.objects.all()
@@ -16,6 +22,7 @@ class PostListView(ListView):
     #<app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
+    paginate_by = 4
 
 class PostDetailView(DetailView):
     model = Post
@@ -52,6 +59,31 @@ class PostDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
             return True
         return False #403 -forbidden 
 
+
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+
+@login_required
+def comment_approve(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.approve()
+    return redirect('post-detail', pk=comment.post.pk)
+
+@login_required
+def comment_remove(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('post-detail', pk=comment.post.pk)
 
 
 def about(request):

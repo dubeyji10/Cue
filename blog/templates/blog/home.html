@@ -13,6 +13,9 @@
                 <img class="rounded" src="{{ post.image_url|default_if_none:'' }}" />
               </div> 
               <p><h4>{{ post.content }}</h4></p>
+
+              <a href="{% url 'post-detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+
             </div>
     </article>
     {% endfor %}
