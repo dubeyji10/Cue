@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github', # new
-
+    'sorl.thumbnail',
+    'pinax.likes',
     
 ]
 
@@ -141,7 +142,11 @@ MEDIA_URL = '/media/'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'pinax.likes.auth_backends.CanLikeBackend',
 )
 SITE_ID = 1
 
+PINAX_LIKES_LIKABLE_MODELS = {
+        "blog.Post": {}  ,# override default config settings for each model in this dict
+    }
 #LOGIN_REDIRECT_URL = 'blog-home' #already added 
