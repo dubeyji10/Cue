@@ -46,7 +46,7 @@ class Comment(models.Model):
     author = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
+    approved_comment = models.BooleanField(default=True)#try True here
 
     def approve(self):
         self.approved_comment = True

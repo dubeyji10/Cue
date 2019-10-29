@@ -87,8 +87,8 @@ a:hover{
     }
 */
         blockquote:first-line {
-            font: 1.85em "Sketch Block";
-            color: #fff79e;
+            font: 1.45em "Sketch Block";
+            color: #fad11a;
         }
 
         blockquote:first-letter {
@@ -129,8 +129,8 @@ a:hover{
             font-size: 1.3em;
             font-style: italic;
             letter-spacing: .25em;
-        }
-        */
+        }*/
+        
         @-moz-document url-prefix() { 
 
             blockquote:first-letter {
