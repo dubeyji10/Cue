@@ -3,11 +3,13 @@ from .models import Post,Comment
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from PIL import Image
-from .forms import CommentForm
+from .forms import CommentForm,SearchForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Permission, User
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.views.generic.dates import YearArchiveView,MonthArchiveView
 
 def home(request):
     context = {
@@ -24,9 +26,29 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 4
 
+
 class PostDetailView(DetailView):
     model = Post
-    
+
+#adding month view
+class PostYearArchiveView(YearArchiveView):
+    queryset = Post.objects.all()
+    date_field = "date_posted"
+    make_object_list = True
+    allow_future = True
+   
+class UserPostListView(ListView):
+    model = Post
+    template_name = 'blog/user_posts.html'
+    #<app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    #ordering = ['-date_posted']
+    paginate_by = 3
+
+    def get_queryset(self):
+        user = get_object_or_404(User,username=self.kwargs.get('username'))
+        return Post.objects.filter(author=user).order_by('-date_posted')
+        
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
     fields = ['title','content','image']#remove image
@@ -91,3 +113,23 @@ def about(request):
 
 def welcome(request):
     return render(request,'blog/welcome.html',{'title':'Welcome'})
+
+def post_search(request):
+    query=None
+    context=None
+    results=None
+    trigram_results=None
+    result=None
+    form=SearchForm()
+    if 'query' in request.GET:
+        form=SearchForm(request.GET)
+        if form.is_valid():
+            query=form.cleaned_data['query']
+            print(query)
+            search_vector = SearchVector('title', 'body')
+            search_query = SearchQuery(query)
+            result=Post.published.annotate(search=search_vector,rank=SearchRank(search_vector,search_query)).filter(search=search_query).order_by('-rank')
+            trigram_results=Post.published.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=0.3).order_by('-similarity')
+    context={'form':form,'results':trigram_results,'result':result,'query':query}
+    template='blog/search.html'
+    return render(request,template,context)

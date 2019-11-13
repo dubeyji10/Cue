@@ -7,3 +7,6 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('author','text',)
+
+class SearchForm(forms.Form):
+    query=forms.CharField()

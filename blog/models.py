@@ -3,14 +3,19 @@ from django.utils import timezone
 from django.contrib.auth.models import User #one to many relationship
 from django.urls import reverse
 from PIL import Image
+from django.db import models
+from django.contrib.auth.models import User
+
 class Post(models.Model):
     title = models.CharField(max_length = 100)
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author  = models.ForeignKey(User,on_delete=models.CASCADE)
     image = models.ImageField(blank=True,null=True,upload_to='posts_pics')
-    likes = models.ManyToManyField(User, related_name='likes',blank=True)
-    
+    positive_votes = models.IntegerField(default=0)
+    negative_votes = models.IntegerField(default=0)
+    total_points = models.IntegerField(default=0)
+
     def __str__(self):
         return f'{self.user.username} Profile'
     
@@ -46,7 +51,7 @@ class Comment(models.Model):
     author = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=True)#try True here
+    approved_comment = models.BooleanField(default=False)#try True here
 
     def approve(self):
         self.approved_comment = True
@@ -54,3 +59,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView
+from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView,UserPostListView,PostYearArchiveView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -18,8 +18,12 @@ urlpatterns = [
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
-    
-]
+    path('search/',views.post_search,name="post_search"),  
+    #add path for /accounts  
+    path('user/<str:username>',UserPostListView.as_view(),name='user-posts'),
+    path('<int:year>/',PostYearArchiveView.as_view(),name='post-year-archive'),
+
+    ]
 
 if settings.DEBUG:
     urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

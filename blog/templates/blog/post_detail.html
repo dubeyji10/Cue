@@ -5,7 +5,7 @@
       <img class = "rounded-circle article-img" src = "{{ post.author.profile.image.url }}">
             <div class="media-body">
               <div class="article-metadata">
-                 <a class="mr-2" href="#">{{ object.author }}</a>
+                 <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
                  <small class="text-muted">{{ object.date_posted |date:"F d, Y"}}</small>
             {% if object.author == user %}
                <div>
@@ -19,7 +19,10 @@
               <img class = "img-fluid" src = "{{ post.image_url|default_if_none:'' }}">
               <p class="article-content">{{ object.content }}</p>
   
-            
+              <span class="likebtn-wrapper" data-identifier="item_1"></span>
+              <script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script>
+              
+              
     </article>
   
     <hr>
@@ -44,7 +47,23 @@
             {% empty %}
                 <p>No comments here yet :(</p>
             {% endfor %}
-        
+
+
+
+<a href="#" onClick="document.getElementById('likebutton').submit()"> Like this Post <img src ='/home/dubeyji/Desktop/MP/first_project/blog/static/blog/likebutton.png'> </a> {{eachpost.likes}}   |  <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post  <img src ='/home/dubeyji/Desktop/MP/first_project/blog/static/blog/likebutton.png'> </a> {{eachpost.dislikes}}
+
+<form id="likebutton" method="POST" action="/posts/{{eachpost.id}}/preference/1/">
+            {% csrf_token %}
+            <input type="hidden">
+ 'like'
+            </form>
+            
+            <form id="dislikebutton" method="POST" action="/posts/{{eachpost.id}}/preference/2/">
+            {% csrf_token %}
+            <input type="hidden">
+ 'dislike'
+            </form>
+            
 {% endblock content %}
 
 
