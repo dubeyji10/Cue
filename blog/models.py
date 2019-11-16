@@ -22,17 +22,18 @@ class Post(models.Model):
     @property
     def image_url(self):
         if self.image:
+            img = Image.open(self.image.path)
+
+            if img.height > 600 or img.width > 600:
+                output_size = (400,300)
+                img.save(self.image.path)
+
+
             return self.image.url
         return ''
 
     def save(self):
         super().save()
-        img = Image.open(self.image.path)
-
-        if img.height > 600 or img.width > 600:
-            output_size = (400,300)
-            img.save(self.image.path)
-
 
     def __str__(self):
         return f'{self.user.username} Profile'

@@ -18,12 +18,8 @@
               <h2 class="article-title" href="#">{{ object.title }}</h2>
               <img class = "img-fluid" src = "{{ post.image_url|default_if_none:'' }}">
               <p class="article-content">{{ object.content }}</p>
-  
-              <span class="likebtn-wrapper" data-identifier="item_1"></span>
-              <script>(function(d,e,s){if(d.getElementById("likebtn_wjs"))return;a=d.createElement(e);m=d.getElementsByTagName(e)[0];a.async=1;a.id="likebtn_wjs";a.src=s;m.parentNode.insertBefore(a, m)})(document,"script","//w.likebtn.com/js/w/widget.js");</script>
               
-              
-    </article>
+       </article>
   
     <hr>
                 <a class="btn" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
@@ -33,10 +29,10 @@
                 <div class="comment">
                     <div class="date">
                         <font color = "#2eec2c">{{ comment.created_date }}</font>
-                        {% if comment.approved_comment %}
+                        
                             <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"> Remove <span class="glyphicon glyphicon-remove"></span></a>
                             <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"> Approve <span class="glyphicon glyphicon-ok"></span></a>
-                        {% endif %}
+                        
                     </div>
                     <strong><font color = "#eeeccc"> {{ comment.author }}</font></strong>
                     <p><font color = "#2eeccc"> {{ comment.text|linebreaks }} </font> </p>
@@ -48,22 +44,7 @@
                 <p>No comments here yet :(</p>
             {% endfor %}
 
-
-
-<a href="#" onClick="document.getElementById('likebutton').submit()"> Like this Post <img src ='/home/dubeyji/Desktop/MP/first_project/blog/static/blog/likebutton.png'> </a> {{eachpost.likes}}   |  <a href="#" onClick="document.getElementById('dislikebutton').submit()">Dislike This Post  <img src ='/home/dubeyji/Desktop/MP/first_project/blog/static/blog/likebutton.png'> </a> {{eachpost.dislikes}}
-
-<form id="likebutton" method="POST" action="/posts/{{eachpost.id}}/preference/1/">
-            {% csrf_token %}
-            <input type="hidden">
- 'like'
-            </form>
-            
-            <form id="dislikebutton" method="POST" action="/posts/{{eachpost.id}}/preference/2/">
-            {% csrf_token %}
-            <input type="hidden">
- 'dislike'
-            </form>
-            
+   
 {% endblock content %}
 
 

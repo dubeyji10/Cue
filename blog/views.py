@@ -135,7 +135,9 @@ def post_search(request):
     context={'form':form,'results':trigram_results,'result':result,'query':query}
     template='blog/search.html'
     return render(request,template,context)
-##
+
+#
+# #
 # Handle 404 Errors
 # @param request WSGIRequest list with all HTTP Request
 # def error404(request,exception):
@@ -154,6 +156,7 @@ def post_search(request):
 
 # def notfound(request, exception):
 #     return render(request,'blog/error_404.html')
+#
 
 def error_404_view(request, exception):
     data = {"name": "Cue"}

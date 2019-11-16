@@ -1,11 +1,11 @@
 {% extends "blog/base.html" %}
 {% block content %}
 
-<h2>Post archives for {{ month|date:"F" }}, {{ month|date:"Y" }}</h2>
+<h2>    Post archives for {{ month|date:"F" }}, {{ month|date:"Y" }} !#@#@!#!@ !</h2>
 <ul>
     {% for post in object_list %}
         <li>
-        <a href="{% url 'post-detail' post.id %}">{{ post.title }} </a> <font color = "ffffff">  by {{ post.author }} </font>
+        <a href="{% url 'post-detail' post.id %}">{{ post.title }} </a> <font color = "#3fefff">  by {{ post.author }} </font>
         </li>
     {% endfor %}
 </ul>

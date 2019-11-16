@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 
 urlpatterns = [
+
     path('',views.welcome,name='cue'),#remove this line just checking something
     path('home/',PostListView.as_view(),name='blog-home'),#homepage now
                  #calls home function
@@ -22,7 +23,7 @@ urlpatterns = [
     path('search/',views.post_search,name="post_search"),  
     #add path for /accounts  
     path('user/<str:username>',UserPostListView.as_view(),name='user-posts'),
-    path('archive/<int:year>/month/<int:month>', PostMonthArchiveView.as_view(month_format='%m'), name='blog_archive_month'),
+    path('archive/<int:year>/month/<int:month>', PostMonthArchiveView.as_view(month_format='%m'), name='post_archive_month'),
 ]
 
 
