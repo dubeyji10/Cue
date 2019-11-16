@@ -18,6 +18,7 @@
         <title> Cue </title> 
     {% endif %}    
 </head>
+
 <body style="background-image: url({% static 'blog/background.jpg' %}); background-size:100%;  background-repeat: no-repeat;background-attachment: fixed;">
         <header class="site-header">
                 <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
@@ -47,7 +48,8 @@
                       </div>
                     </div>
                   </div>
-                </nav>
+                </nav>                
+
         </header>
             <main role="main" class="container">
                     <div class="row">
@@ -61,23 +63,37 @@
                           {% endif %}
                           {% block content %}{% endblock %}
                       </div>
-                      <div class="col-md-4">
-                        <div class="content-section">
-                          <h3>Our Sidebar</h3>
-                          <p class='text-muted'>You can put any information here you'd like.
-                            <ul class="list-group">
-                              <li class="list-group-item list-group-item-light">Latest Posts</li>
-                              <li class="list-group-item list-group-item-light">Announcements</li>
-                              <li class="list-group-item list-group-item-light">Calendars</li>
-                              <li class="list-group-item list-group-item-light">etc</li>
-                            </ul>
-                          </p>
+
+                      <div>
+                          <div class="content-section">
+                            <h3><font color='ffffff'>Our Sidebar</font></h3>
+                            <p class='text-muted'>You can put any information here you'd like.
+                              <ul>
+                                
+                                <li class=""><a class="nav-item nav-link" href="#">Latest Posts</a></li>
+                                <li class=""><a class="nav-item nav-link" href="#">Announcements</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/01">January</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/02">February</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/03">March</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/04">April</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/05">May</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/06">June</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/07">July</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/08">August</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/09">September</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/10">October</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/11">November</a></li>
+                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/12">December</a></li>
+  
+                              </ul>
+                            
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
             </main>
 
-            
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -86,3 +102,5 @@
   
 </body>
 </html>
+
+

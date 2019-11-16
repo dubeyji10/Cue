@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,render_to_response
 from .models import Post,Comment
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
@@ -9,7 +9,9 @@ from django.contrib.auth.models import Permission, User
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.views.generic.dates import YearArchiveView,MonthArchiveView
+from django.views.generic.dates import YearArchiveView,MonthArchiveView,WeekArchiveView
+from django.template import loader,Context
+from django.http import HttpResponse
 
 def home(request):
     context = {
@@ -31,12 +33,12 @@ class PostDetailView(DetailView):
     model = Post
 
 #adding month view
-class PostYearArchiveView(YearArchiveView):
+class PostMonthArchiveView(MonthArchiveView):
     queryset = Post.objects.all()
     date_field = "date_posted"
-    make_object_list = True
     allow_future = True
-   
+
+
 class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'
@@ -133,3 +135,27 @@ def post_search(request):
     context={'form':form,'results':trigram_results,'result':result,'query':query}
     template='blog/search.html'
     return render(request,template,context)
+##
+# Handle 404 Errors
+# @param request WSGIRequest list with all HTTP Request
+# def error404(request,exception):
+
+#     # 1. Load models for this view
+#     #from idgsupply.models import My404Method
+
+#     # 2. Generate Content for this view
+#     template = loader.get_template('blog/error_404.html')
+#     context = Context({
+#         'message': 'All: %s' % request,
+#         })
+
+#     # 3. Return Template for this view + Data
+#     return HttpResponse(content=template.render(context), content_type='text/html; charset=utf-8', status=404)
+
+# def notfound(request, exception):
+#     return render(request,'blog/error_404.html')
+
+def error_404_view(request, exception):
+    data = {"name": "Cue"}
+    return render(request,'blog/error_404.html', data)
+

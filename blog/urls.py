@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView,UserPostListView,PostYearArchiveView
+from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView,UserPostListView,PostMonthArchiveView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 
 urlpatterns = [
     path('',views.welcome,name='cue'),#remove this line just checking something
@@ -21,9 +22,9 @@ urlpatterns = [
     path('search/',views.post_search,name="post_search"),  
     #add path for /accounts  
     path('user/<str:username>',UserPostListView.as_view(),name='user-posts'),
-    path('<int:year>/',PostYearArchiveView.as_view(),name='post-year-archive'),
+    path('archive/<int:year>/month/<int:month>', PostMonthArchiveView.as_view(month_format='%m'), name='blog_archive_month'),
+]
 
-    ]
 
 if settings.DEBUG:
     urlpatterns +=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
