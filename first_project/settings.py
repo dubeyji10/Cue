@@ -73,7 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                 #added at 18:52 , 13 Nov
+                #'blog.context_processors.posts', ### ADDED LINE
+
             ],
         },
     },

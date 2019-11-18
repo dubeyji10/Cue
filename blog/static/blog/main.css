@@ -38,10 +38,10 @@ body {
   .content-section { /* posts */
     background:/*#ececec*/transparent;
     padding: 10px 20px;
-    border: 2px dashed #0997f6;/* 1px solid #080404*/
-    border-radius: 15px; /* 3px */
+    border: 2.3px dotted #040404;/* 1px solid #080404*/
+    border-radius: 19.44px; /* 3px */
     margin-bottom: 20px;
-    color: #fffff0; /*remove this line */
+    color: #030303; /*remove this line */
   }
   
   .article-title {
@@ -55,6 +55,7 @@ body {
   
   .article-content {
     white-space: pre-line;
+    color:#020302;
   }
   
   .article-img {
@@ -93,8 +94,8 @@ body {
 
   img.polaroid {
     width: 80%;
-    background-color: white;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: #000000;
+    box-shadow: 0 14px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .comment {
     margin: 20px 0px 20px 20px;

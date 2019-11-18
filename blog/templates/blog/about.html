@@ -1,8 +1,15 @@
 {% extends "blog/base.html" %}
 {% block content %}
-        <h1> <font color = "#ffffff">ABOUT Cue</font></h1>
-        <h2> <font color = "#fffff0">Cue is what’s happening in the world and what people are talking about right now.</font></h2>
-        <h3> <font color = "#fffff0">Cue is something thing said or done that serves as a signal to someone to enter or to begin their speech or performance.</font></h3>
-        <h3> <font color = "#fffff0">So it's <a href="{% url 'blog-home' %}">here's</a> your cue to write something that is in your mind </font></h3>
+        
+        <div class="card" style="width: 45rem ;height: 19rem;">
+                <h1 class="card-title"> <h2 class="card-title"><center>About Cue</center> </h2></h1>
+                <div class="card-body">
+                        <p class="card-text"><font size="4.91px"> Cue is what’s happening in the world and what people are talking about right now.
+                        <br>Cue is something thing said or done that serves as a signal to someone to enter or to begin their speech or performance.
+                        <br>So it's <a href="{% url 'blog-home' %}">here's</a> your cue to write something that is in your mind.
+                </font> </p>
+                </div>
+        </div>
+
 {% endblock content %}
 

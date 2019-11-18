@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 
 {% block content %}
-    <h1><font color ="ffffff">New comment</h1>
+    <h1><font color ="#001000">New comment</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
     </font><button type="submit" class="save btn btn-default">Send</button>

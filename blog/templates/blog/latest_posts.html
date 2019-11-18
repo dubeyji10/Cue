@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+        <h1 class="card-title">
+          Latest Posts
+        </h1>
+        
+        {% for form in forms %}
+
+        <li><font color = "#10cfcf" size = "5.6px">
+                <a href="{% url 'post-detail' form.id %}"> {{ form.title }} </font></a> <font color = "#5ce65c" size = "4px">  by {{ form.author }} </font> on {{ form.date_posted }}
+        </font>
+        </li>
+        {% endfor %}
+{% endblock %}

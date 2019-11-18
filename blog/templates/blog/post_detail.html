@@ -17,7 +17,8 @@
         
               <h2 class="article-title" href="#">{{ object.title }}</h2>
               <img class = "img-fluid" src = "{{ post.image_url|default_if_none:'' }}">
-              <p class="article-content">{{ object.content }}</p>
+              <br>__________________________________________________________________
+              <p class="content"><br>{{ object.content }}</p>
               
        </article>
   
@@ -28,14 +29,15 @@
         
                 <div class="comment">
                     <div class="date">
-                        <font color = "#2eec2c">{{ comment.created_date }}</font>
+                        <font color = "#cc1110">On {{ comment.created_date }}</font>
                         
                             <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"> Remove <span class="glyphicon glyphicon-remove"></span></a>
                             <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"> Approve <span class="glyphicon glyphicon-ok"></span></a>
                         
                     </div>
-                    <strong><font color = "#eeeccc"> {{ comment.author }}</font></strong>
-                    <p><font color = "#2eeccc"> {{ comment.text|linebreaks }} </font> </p>
+                    <strong>by <font color = "#010101"> {{ comment.author }}</font></strong>
+                    <p><font color = "#020202"> {{ comment.text|linebreaks }} </font> </p>
+                _______________________________________________________________________________
                 </div>
         
                 {% endif %}

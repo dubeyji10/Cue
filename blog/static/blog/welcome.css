@@ -30,7 +30,7 @@ body {
     color: #fff;
 }
 */
-a:link {
+  a:link {
     color: red;
 
   }
@@ -45,11 +45,11 @@ a:link {
   /* selected link */
   a:active {
     color: blue;
-  }
-a:hover{
+    }
+  a:hover{
     color:rgb(214, 45, 45);
-   /* text-transform: lowercase;*/
-}
+    /* text-transform: lowercase;*/
+    }
     .container {
         width: 590px;
         margin: 140px auto;
@@ -67,8 +67,9 @@ a:hover{
         border-bottom: 2px dotted #ce2c2c;
         -webkit-transform: rotate(-3deg);
         -moz-transform: rotate(-3deg);
+        color: #010101;
     }
-/*
+
     .container:before {
         content: "“";
         font-size: 13em;
@@ -85,10 +86,10 @@ a:hover{
         top: 150px;
         color: #666;
     }
-*/
+
         blockquote:first-line {
             font: 1.45em "Sketch Block";
-            color: #fad11a;
+            color: #020303;
         }
 
         blockquote:first-letter {
@@ -99,11 +100,13 @@ a:hover{
             margin-right: -18px;
             position: relative;
             z-index: 1;
+            color: #020303;
         }
 
         blockquote strong:first-child {
             margin-left: 8px;
             letter-spacing: 0;
+            color: #020303;
         }
 
        /*blockquote strong:last-child {

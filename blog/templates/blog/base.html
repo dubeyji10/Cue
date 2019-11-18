@@ -19,7 +19,7 @@
     {% endif %}    
 </head>
 
-<body style="background-image: url({% static 'blog/background.jpg' %}); background-size:100%;  background-repeat: no-repeat;background-attachment: fixed;">
+<body style="background-color:#fff">
         <header class="site-header">
                 <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                   <div class="container">
@@ -31,8 +31,9 @@
                       <div class="navbar-nav mr-auto">     
                         <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
-                        <a class="nav-item nav-link" href="http://127.0.0.1:8000/accounts/login/">Accounts</a>
-                      </div>
+                    </div>
+
+
                       <!-- Navbar Right Side -->
                       <div class="navbar-nav">
                       {% if user.is_authenticated %}
@@ -64,24 +65,13 @@
 
                       <div>
                           <div class="content-section">
-                            <h3><font color='ffffff'>Our Sidebar</font></h3>
-                            <p class='text-muted'>You can put any information here you'd like.
+                            <h3><font color='04040f'>Our Sidebar</font></h3>
+                            <p class='text-muted small'>You can put any information here you'd like.
                               <ul>
-                                <li class=""><a class="nav-item nav-link" href="#">Latest Posts</a></li>
-                                <li class=""><a class="nav-item nav-link" href="#">Announcements</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/01">January</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/02">February</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/03">March</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/04">April</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/05">May</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/06">June</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/07">July</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/08">August</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/09">September</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/10">October</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/11">November</a></li>
-                                <li class=""><a class="nav-item nav-link" href="http://localhost:8000/archive/2019/month/12">December</a></li>
-                              </ul>
+                                <li class=""><a class="nav-item nav-link" href="{% url 'latest-posts' %}">Latest Posts</a></li>
+                                <li class=""><a class="nav-item nav-link" href="{% url 'blog-announcemnet' %}">Announcements</a></li>
+                                <li class=""><a class="nav-item nav-link" href="{% url 'archives' %}">Archives</a></li>
+                                </ul>
                             </p>
                           </div>
                       </div>

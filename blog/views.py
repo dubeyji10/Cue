@@ -12,12 +12,16 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.views.generic.dates import YearArchiveView,MonthArchiveView,WeekArchiveView
 from django.template import loader,Context
 from django.http import HttpResponse
+from datetime import *
+from django.utils import timezone
+from django.db.models import Q
 
 def home(request):
     context = {
         'posts':Post.objects.all()
     }
     return render(request,'blog/home.html',context)
+
 
     
 class PostListView(ListView):
@@ -33,11 +37,14 @@ class PostDetailView(DetailView):
     model = Post
 
 #adding month view
-class PostMonthArchiveView(MonthArchiveView):
-    queryset = Post.objects.all()
-    date_field = "date_posted"
-    allow_future = True
+# class PostMonthArchiveView(MonthArchiveView):
+#     queryset = Post.objects.all()
+#     date_field = "date_posted"
+#     allow_future = True
 
+# def archive(request, year, month):
+#     post_list = Post.objects.filter(date_posted__year=year,date_posted__month=month).order_by('-date_posted')
+#     return render(request, 'blog/index.html', context={'post_list': post_list})
 
 class UserPostListView(ListView):
     model = Post
@@ -113,28 +120,13 @@ def comment_remove(request, pk):
 def about(request):
     return render(request,'blog/about.html',{'title': 'About Blog'})
 
+
+def announcemnet(request):
+    return render(request,'blog/announcemnet.html',{'title': 'Announcement'})
+
 def welcome(request):
     return render(request,'blog/welcome.html',{'title':'Welcome'})
 
-def post_search(request):
-    query=None
-    context=None
-    results=None
-    trigram_results=None
-    result=None
-    form=SearchForm()
-    if 'query' in request.GET:
-        form=SearchForm(request.GET)
-        if form.is_valid():
-            query=form.cleaned_data['query']
-            print(query)
-            search_vector = SearchVector('title', 'body')
-            search_query = SearchQuery(query)
-            result=Post.published.annotate(search=search_vector,rank=SearchRank(search_vector,search_query)).filter(search=search_query).order_by('-rank')
-            trigram_results=Post.published.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=0.3).order_by('-similarity')
-    context={'form':form,'results':trigram_results,'result':result,'query':query}
-    template='blog/search.html'
-    return render(request,template,context)
 
 #
 # #
@@ -162,3 +154,10 @@ def error_404_view(request, exception):
     data = {"name": "Cue"}
     return render(request,'blog/error_404.html', data)
 
+
+def latest_posts(request):
+    latest_posts = Post.objects.all()
+    #page = request.GET.get('page')
+    forms = Post.objects.filter(date_posted__lte=timezone.now()).order_by('-date_posted')[0:3]
+    #paginator = Paginator(post_list, per_page=3)
+    return render(request, 'blog/latest_posts.html', {'posts': latest_posts,'forms': forms,})
