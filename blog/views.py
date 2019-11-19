@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,render_to_response
 from .models import Post,Comment
-from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView,TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from PIL import Image
 from .forms import CommentForm,SearchForm
@@ -15,6 +15,9 @@ from django.http import HttpResponse
 from datetime import *
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+
 
 def home(request):
     context = {
@@ -88,7 +91,54 @@ class PostDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False #403 -forbidden 
+#added on 19nov
+#----------------------------------------------------------------------------
+#imported TemplateView
 
+# class SearchView(TemplateView):
+#     try:
+#         template_name = 'blog/search.html'
+#         def get(self, request, *args, **kwargs):
+#             q = request.GET.get('q', '')
+#         #self.results= Post.objects.filter(Q(title__icontains='q'))
+#             results = []
+#             results = Post.objects.filter(title__icontains=q).values
+#             self.results=results
+#             return super().get(request, *args, **kwargs)
+        
+#         def get_context_data(self, **kwargs):
+#             return super().get_context_data(results=self.results, **kwargs)
+#     except (ObjectDoesNotExist, MultipleObjectsReturned):
+#         pass
+    
+
+
+class SearchView(ListView):
+    model = Post
+    template_name = 'blog/search.html'
+    context_object_name = 'all_search_results'
+
+    def get_queryset(self):
+       result = super(SearchView, self).get_queryset()
+       query = self.request.GET.get('q')
+       if query:
+          postresult = Post.objects.filter(title__contains=query)
+          result = postresult
+       else:
+           result = None
+       return result
+
+
+#
+# class SearchView(TemplateView):
+#     template_name = 'blog/search.html'
+#     model = Post
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         object_list= Post.objects.filter(Q(title__icontains='q'))
+#         return object_list
+
+#----------------------------------------------------------------------------
 
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -208,22 +258,8 @@ def latest_posts(request):
     return render(request, 'blog/latest_posts.html', {'posts': latest_posts,'forms': forms,})
 
 
-def searchform(request):
-    return render(request, 'blog/search_form2.html')
-
-
-def search(request):
-    error = False
-    if 'q' in request.GET:
-        q = request.GET['q']
-        if not q:
-            error = True
-        else:
-            books = Post.objects.filter(title=q)
-            return render(request, 'blog/search_results.html',
-                {'post': post, 'query': q})
-    return render(request, 'blog/search_form.html',
-        {'error': error})
+# def searchform(request):
+#     return render(request, 'blog/search_form2.html')
 
 def listallusers(request):
     all_users = User.objects.all()

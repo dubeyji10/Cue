@@ -1,0 +1,21 @@
+
+{% extends "blog/base.html" %}
+{% block content %}
+
+__________________________________________
+ 
+
+<br>
+<br>
+{% for result in all_search_results %}
+<ul>   
+    <li><a href="{% url 'post-detail' result.id %}"> {{ result.title }} </a></li>
+</ul>
+{% empty %}
+   <h1>
+    No Result
+   </h1>
+{% endfor %}
+
+<br>__________________________________________
+{% endblock %}

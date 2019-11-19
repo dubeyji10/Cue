@@ -1,11 +1,13 @@
 from django.urls import path
-from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView,UserPostListView
+from .views import PostListView,PostDetailView,PostCreateView,PostUpdateView,PostDeleteView,UserPostListView,SearchView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url
 from django.views.generic.dates import ArchiveIndexView
 from .models import Post
+from django.urls import reverse
+
 urlpatterns = [
 
     path('',views.welcome,name='cue'),#remove this line just checking something
@@ -30,7 +32,7 @@ urlpatterns = [
     path('archive/',ArchiveIndexView.as_view(model=Post, date_field="date_posted"),name="archives"),
     path('latest_posts/',views.latest_posts,name='latest-posts'),
     path('allusers/',views.listallusers,name='allusers'),
-    
+    url(r'^search/$', SearchView.as_view(), name='search'),#added 17nov
     #path('search/', SearchResultsView.as_view(), name='search_results'),
     #url(r'^search/', views.search, name="search")
     #url(r'^searchform/$', views.searchform),

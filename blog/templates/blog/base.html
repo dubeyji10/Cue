@@ -29,8 +29,8 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggle">
                       <div class="navbar-nav mr-auto">     
-                        <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-                        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>                 
+                        <a class="nav-item nav-link" href="{% url 'blog-home' %}"><img width = "27" height = "28" src = "{% static 'blog/home.png' %}"> Home</a>
+                        <a class="nav-item nav-link" href="{% url 'blog-about' %}"><img width = "27" height = "28" src = "{% static 'blog/about.png' %}"> About</a>  
                     </div>
 
 
@@ -41,8 +41,8 @@
                       <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                       <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                       {% else %}
-                        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                        <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-item nav-link" href="{% url 'login' %}"> <img width = "30" height = "30" src = "{% static 'blog/login.png' %}"></a>
+                        <a class="nav-item nav-link" href="{% url 'register' %}"> <img width = "20" height = "20" src = "{% static 'blog/register.png' %}"></a>
                       {% endif %}
                       </div>
                     </div>
@@ -72,12 +72,21 @@
                                 <li class=""><a class="nav-item nav-link" href="{% url 'blog-announcemnet' %}">Announcements</a></li>
                                 <li class=""><a class="nav-item nav-link" href="{% url 'archives' %}">Archives</a></li>
                                 <li class=""><a class="nav-item nav-link" href="{% url 'allusers' %}">Accounts</a></li>
-                                
-                                </ul>
+                              </ul>
                             </p>
                           </div>
+                          <p>
+                            <div>
+                              <form method="GET" action="{% url 'search' %}">
+                                <input style="background-color: #effff3;width=30px;" id="searchbox" class = "form-control" name="q" type="text" placeholder="Search Posts"/><br><center><input type="image" src="{% static 'blog/search.png' %}" alt="Submit" width="48" height="48"/></center>
+                              </form>
+                            </div>
+                          </p>
                       </div>
+                
+                      
                    </div>
+
             </main>
 
 
@@ -89,5 +98,3 @@
   
 </body>
 </html>
-
-
