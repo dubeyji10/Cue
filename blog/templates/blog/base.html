@@ -30,7 +30,7 @@
                     <div class="collapse navbar-collapse" id="navbarToggle">
                       <div class="navbar-nav mr-auto">     
                         <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
-                        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+                        <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>                 
                     </div>
 
 
@@ -65,12 +65,14 @@
 
                       <div>
                           <div class="content-section">
-                            <h3><font color='04040f'>Our Sidebar</font></h3>
-                            <p class='text-muted small'>You can put any information here you'd like.
+                            <h3><font color='04040f'>Additional Links</font></h3>
+                            <p class='text-muted small'>links to browse through this website </p>
                               <ul>
                                 <li class=""><a class="nav-item nav-link" href="{% url 'latest-posts' %}">Latest Posts</a></li>
                                 <li class=""><a class="nav-item nav-link" href="{% url 'blog-announcemnet' %}">Announcements</a></li>
                                 <li class=""><a class="nav-item nav-link" href="{% url 'archives' %}">Archives</a></li>
+                                <li class=""><a class="nav-item nav-link" href="{% url 'allusers' %}">Accounts</a></li>
+                                
                                 </ul>
                             </p>
                           </div>

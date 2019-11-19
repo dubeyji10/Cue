@@ -1,0 +1,21 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+        <h1 class="card-title">
+                Accounts
+        </h1>
+        
+        {% for object in all_users %}
+__________________________________________
+      <div>
+        <li>
+        
+            <font color = "#00001f" size = "5.6px">
+                    <a class="navbar-brand mr-4" href="{% url 'user-posts' object.username %}">{{ object.username }}</a>
+            </font>
+        
+        </li>
+      </div>
+        {% endfor %}
+__________________________________________
+{% endblock %}

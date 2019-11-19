@@ -1,15 +1,23 @@
 {% extends "blog/base.html" %}
 {% block content %}
-        
-        <div class="card" style="width: 45rem ;height: 19rem;">
+{% load static %}
+        <div class="card" style="width: 45rem ;height: 21rem;">
                 <h1 class="card-title"> <h2 class="card-title"><center>About Cue</center> </h2></h1>
                 <div class="card-body">
                         <p class="card-text"><font size="4.91px"> Cue is what’s happening in the world and what people are talking about right now.
                         <br>Cue is something thing said or done that serves as a signal to someone to enter or to begin their speech or performance.
                         <br>So it's <a href="{% url 'blog-home' %}">here's</a> your cue to write something that is in your mind.
                 </font> </p>
-                </div>
+                
         </div>
 
+        <center>Browse Git Repository for this website</center>
+        <center><a href = "https://github.com/dubeyji10/first_project" target="_blank"><img class = "rounded-circle article-img" src = "{% static 'blog/git.png' %}"></a></center>
+          
+        </div>
+
+<div class="small bottom">
+        <br> A full stack project by Abhishek Dubey for Mini Project I <br>submitted to Mr. Subhash Chandra Agrawal Asst. Prof. GLA UNIVERSITY
+</div>
 {% endblock content %}
 

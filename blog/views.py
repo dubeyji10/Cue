@@ -14,14 +14,13 @@ from django.template import loader,Context
 from django.http import HttpResponse
 from datetime import *
 from django.utils import timezone
-from django.db.models import Q
+from django.contrib.auth import get_user_model
 
 def home(request):
     context = {
         'posts':Post.objects.all()
     }
     return render(request,'blog/home.html',context)
-
 
     
 class PostListView(ListView):
@@ -128,6 +127,52 @@ def welcome(request):
     return render(request,'blog/welcome.html',{'title':'Welcome'})
 
 
+# def search(request):
+#     query_string = ''
+#     found_entries = None
+#     if ('q' in request.GET) and request.GET['q'].strip():
+#         query_string = request.GET['q']
+#         entry_query = utils.get_query(query_string, ['title', 'body',])
+#         posts = Post.objects.filter(entry_query).order_by('created')
+#         return render(request, 'blog/search.html', { 'query_string': query_string, 'posts': posts })
+#     else:
+#         return render(request, 'blog/search.html', { 'query_string': 'Null', 'found_entries': 'Enter a search term' })
+
+
+# def search(request):
+#     query_string = ''
+#     found_entries = None
+#     if ('q' in request.GET) and request.GET['q'].strip():
+#         query_string = request.GET['q']
+
+#         entry_query = get_query(query_string, ['title', 'content',])
+
+#         found_entries = Entry.objects.filter(entry_query).order_by('-date_posted')
+
+#     return render_to_response('blog/search_results.html',
+#                           { 'query_string': query_string, 'found_entries': found_entries },
+#                           context_instance=RequestContext(request))
+
+# def search(request):
+#     query=None
+#     context=None
+#     results=None
+#     trigram_results=None
+#     result=None
+#     form=SearchForm()
+#     if 'query' in request.GET:
+#         form=SearchForm(request.GET)
+#         if form.is_valid():
+#             query=form.cleaned_data['query']
+#             print(query)
+#             search_vector = SearchVector('title', 'body')
+#             search_query = SearchQuery(query)
+#             result=Post(search=search_vector,rank=SearchRank(search_vector,search_query)).filter(search=search_query).order_by('-rank')
+#             trigram_results=Post.published.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=0.3).order_by('-similarity')
+#     context={'form':form,'results':trigram_results,'result':result,'query':query}
+#     template='blog/search.html'
+#     return render(request,template,context)
+
 #
 # #
 # Handle 404 Errors
@@ -161,3 +206,29 @@ def latest_posts(request):
     forms = Post.objects.filter(date_posted__lte=timezone.now()).order_by('-date_posted')[0:3]
     #paginator = Paginator(post_list, per_page=3)
     return render(request, 'blog/latest_posts.html', {'posts': latest_posts,'forms': forms,})
+
+
+def searchform(request):
+    return render(request, 'blog/search_form2.html')
+
+
+def search(request):
+    error = False
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        else:
+            books = Post.objects.filter(title=q)
+            return render(request, 'blog/search_results.html',
+                {'post': post, 'query': q})
+    return render(request, 'blog/search_form.html',
+        {'error': error})
+
+def listallusers(request):
+    all_users = User.objects.all()
+    #page = request.GET.get('page')
+    #forms = Post.objects.filter(date_posted__lte=timezone.now()).order_by('-date_posted')[0:3]
+    #paginator = Paginator(post_list, per_page=3)
+    return render(request, 'blog/AllUsers.html', {'all_users': all_users,})
+

@@ -29,7 +29,12 @@ urlpatterns = [
     #path('archives/<int:year>/<int:month>/', views.archive, name='archive'),
     path('archive/',ArchiveIndexView.as_view(model=Post, date_field="date_posted"),name="archives"),
     path('latest_posts/',views.latest_posts,name='latest-posts'),
+    path('allusers/',views.listallusers,name='allusers'),
+    
     #path('search/', SearchResultsView.as_view(), name='search_results'),
+    #url(r'^search/', views.search, name="search")
+    #url(r'^searchform/$', views.searchform),
+    #url(r'^search/$', views.search),
 
 ]
 

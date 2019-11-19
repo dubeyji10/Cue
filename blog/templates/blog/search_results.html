@@ -1,13 +1,15 @@
-{% extends "blog/base.html" %}
-{% block content %}
+{% load staticfiles %}
 
-<h2>    Posts found: </h2>
-<ul>
-    {% for post in object_list %}
-        <li>
-        <a href="{% url 'post-detail' post.id %}">{{ post.title }} </a> <font color = "#3fefff">  by {{ post.author }} </font>
-        </li>
-    {% endfor %}
-</ul>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+<p>You searched for: <strong>{{ query }}</strong></p>
 
-{% endblock %}
+{% if post %}
+    
+    <ul>
+        {% for p in post %}
+        <li>{{ p.title }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
