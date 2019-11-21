@@ -15,7 +15,7 @@
                 {% endif %}
               </div class='article'> 
               <div>
-                  <p>{{ post.content|safe|truncatewords:"50"|linebreaks }}</p> 
+                  <p>{{ post.content|safe|truncatewords:"30"|linebreaks }}</p> 
                   <a href="{% url 'post-detail' pk=post.pk %}">   read more</a>
               </div>
             Comments: {{ post.approved_comments.count }}</a>

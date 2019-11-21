@@ -5,7 +5,7 @@
 
         {% for article in latest %}
             <li><font color = "#010102">
-                <a href="{% url 'post-detail' article.id %}"> {{ article.title }} </a> <font color = "#c22fff">  by {{ article.author }} </font> on {{ article.date_posted }}
+                <a href="{% url 'post-detail' article.id %}"> {{ article.title }} </a>by <font color = "#6bfa75">  <a class="mr-2" href="{% url 'user-posts' article.author.username %}">{{ article.author }}</a></font> on {{ article.date_posted }}
                 </font>
             </li>
         {% endfor %}
