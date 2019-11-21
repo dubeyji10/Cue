@@ -1,6 +1,6 @@
 # BCSJ0950
 ## first_project
-### visit site : http://dubeyji.pythonanywhere.com/home/
+### visit site : http://dubeyji.pythonanywhere.com/
 --------------------------------
 MINI PROJECT-I
 --------------------------------
