@@ -1,7 +1,11 @@
 {% extends "blog/base.html" %}
 {% block content %}
+
     <article class="media content-section">
-    
+
+
+
+
       <img class = "rounded-circle article-img" src = "{{ post.author.profile.image.url }}">
             <div class="media-body">
               <div class="article-metadata">
@@ -19,9 +23,16 @@
               <img class = "img-fluid" src = "{{ post.image_url|default_if_none:'' }}">
               <br>__________________________________________________________________
               <p class="content"><br>{{ object.content|linebreaks }}</p>
-              
+
+                <div>
+                    <a href="{% url 'like' pk=post.pk %}"> LIKE THIS POST
+                        <span class="glyphicon glyphicon-heart-empty" style="font-size:30px;" id='like_button'></span>&nbsp;&nbsp;&nbsp;
+                    </a>
+                    <div>  total likes : <h5 style="font-weight: bolder;">{{ object.likes }}</h5> </div>
+                </div>
+
        </article>
-  
+
     <hr> {% if user.is_authenticated %}
                 <a class="btn" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
          {% endif %}

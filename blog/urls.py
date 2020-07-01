@@ -37,6 +37,9 @@ urlpatterns = [
     #url(r'^search/', views.search, name="search")
     #url(r'^searchform/$', views.searchform),
     #url(r'^search/$', views.search),
+    # ----------- 7July 2020 -----------------
+    # url(r'^like/(\d+)',views.like ,name='like'),
+    path('like/<int:pk>/', views.like, name='like'),
 
 ]
 

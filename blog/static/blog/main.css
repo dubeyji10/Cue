@@ -11,7 +11,7 @@ body {
   
   h4, h5, h6{
     color:#020302; /* #13e4c1;*/
-    font-display: Helvetica;
+    font-family: Helvetica;
   }
   ul {
     margin: 0;
@@ -45,7 +45,8 @@ body {
   }
   
   .article-title {
-    color: /*#444444*/#1aee8b;/*title of post .. Blog 1 , .. */
+    color: #0e0302;/* #444444 #1aee8b;/*title of post .. Blog 1 , .. */
+
   }
   
   a.article-title:hover {/* when cursor hovers over article title*/

@@ -7,6 +7,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta as tdelta
 
+
+import secretballot
+
 class Post(models.Model):
     title = models.CharField(max_length = 100)
     content = models.TextField()
@@ -16,6 +19,7 @@ class Post(models.Model):
     positive_votes = models.IntegerField(default=0)
     negative_votes = models.IntegerField(default=0)
     total_points = models.IntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -48,9 +52,10 @@ class Post(models.Model):
     def approved_comments(self):
         return self.comments.filter(approved_comment=True)
 
-
-
-
+    def get_likes(self):
+        p = self.likes
+        number_of_likes = p.like_set.all().count()
+        return number_of_likes
 
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments')
@@ -66,3 +71,45 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+# --------------- 7 July ---------------------------------
+
+class Like(models.Model):
+    '''
+    Class defines the structure of a like on a an posted Image
+    '''
+    user = models.ForeignKey(User,on_delete=models.CASCADE, null= True)
+
+    post = models.ForeignKey(Post,on_delete=models.CASCADE, null = True)
+
+    def __int__(self):
+        return self.user.username
+
+    def save_like(self):
+        self.save()
+
+    def unlike(self):
+        self.delete()
+
+    def like(self):
+        self.likes_number = 2
+        self.save()
+
+    @classmethod
+    def get_likes(cls,pk):
+        '''
+        Function that get likes belonging to a paticular posts
+        '''
+        likes = cls.objects.filter(post = pk)
+        return likes
+
+
+    # class Like(models.Model):
+#     # user = models.ForeignKey(User, on_delete=models.CASCADE,)
+#     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='likes')
+#     # picture = models.ForeignKey(Picture)
+#     created_date = models.DateTimeField(auto_now_add=True)
+#     def approve(self):
+#         self.approved_comment = True
+#         self.save()
+
+secretballot.enable_voting_on(Post)

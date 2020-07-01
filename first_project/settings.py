@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -44,10 +45,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.github', # new
-    'sorl.thumbnail',
-    'pinax.likes',
-    
+    'allauth.socialaccount.providers.github',
+    'secretballot',
+    'likes',# new
 ]
 
 MIDDLEWARE = [
@@ -58,6 +58,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'secretballot.middleware.SecretBallotIpMiddleware',
+    # 'secretballot.middleware.SecretBallotUserIpUseragentMiddleware',
+    # 'likes.middleware.SecretBallotUserIpUseragentMiddleware',
+
 ]
 
 ROOT_URLCONF = 'first_project.urls'
@@ -82,7 +86,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'first_project.wsgi.application'
 
-
+# WSGI_APPLICATION = 'wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -144,11 +148,7 @@ MEDIA_URL = '/media/'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'pinax.likes.auth_backends.CanLikeBackend',
 )
 SITE_ID = 1
 
-PINAX_LIKES_LIKABLE_MODELS = {
-        "blog.Post": {}  ,# override default config settings for each model in this dict
-    }
 #LOGIN_REDIRECT_URL = 'blog-home' #already added 

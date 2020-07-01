@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect,render_to_response
-from .models import Post,Comment
+from django.shortcuts import render,redirect
+from .models import Post,Comment,Like
 from django.views.generic import ListView,DetailView,CreateView,UpdateView,DeleteView,TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from PIL import Image
@@ -91,26 +91,6 @@ class PostDeleteView(UserPassesTestMixin, LoginRequiredMixin, DeleteView):
         if self.request.user == post.author:
             return True
         return False #403 -forbidden 
-#added on 19nov
-#----------------------------------------------------------------------------
-#imported TemplateView
-
-# class SearchView(TemplateView):
-#     try:
-#         template_name = 'blog/search.html'
-#         def get(self, request, *args, **kwargs):
-#             q = request.GET.get('q', '')
-#         #self.results= Post.objects.filter(Q(title__icontains='q'))
-#             results = []
-#             results = Post.objects.filter(title__icontains=q).values
-#             self.results=results
-#             return super().get(request, *args, **kwargs)
-        
-#         def get_context_data(self, **kwargs):
-#             return super().get_context_data(results=self.results, **kwargs)
-#     except (ObjectDoesNotExist, MultipleObjectsReturned):
-#         pass
-    
 
 
 class SearchView(ListView):
@@ -164,7 +144,40 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post-detail', pk=comment.post.pk)
+#---------- 7July 2020-------------------
+@login_required()
+def like(request,pk):
+    requested_post = Post.objects.get(id = pk)
+    current_user = request.user
+    if_voted = Like.objects.filter(post = requested_post,user = current_user).count()
+    unlike_parameter = Like.objects.filter(post = requested_post,user = current_user)
 
+    if if_voted==0:
+        requested_post.likes +=1
+        requested_post.save()
+        like = Like(user = current_user, post = requested_post )
+        like.save_like()
+        return redirect('post-detail', pk=pk)
+
+    else:
+        requested_post.likes -=1
+        requested_post.save()
+        for single_unlike in unlike_parameter:
+            single_unlike.unlike()
+        return redirect('post-detail', pk=pk)
+
+    return render(request,'post-detail')
+
+
+
+#
+# @login_required
+# def likes(request, pk):
+#     post = get_object_or_404(Post, pk=pk)
+#
+#     return redirect('post-detail', pk=likes.post.pk)
+# ------------------------------
+# return redirect()
 
 def about(request):
     return render(request,'blog/about.html',{'title': 'About Blog'})
@@ -176,74 +189,6 @@ def announcemnet(request):
 def welcome(request):
     return render(request,'blog/welcome.html',{'title':'Welcome'})
 
-
-# def search(request):
-#     query_string = ''
-#     found_entries = None
-#     if ('q' in request.GET) and request.GET['q'].strip():
-#         query_string = request.GET['q']
-#         entry_query = utils.get_query(query_string, ['title', 'body',])
-#         posts = Post.objects.filter(entry_query).order_by('created')
-#         return render(request, 'blog/search.html', { 'query_string': query_string, 'posts': posts })
-#     else:
-#         return render(request, 'blog/search.html', { 'query_string': 'Null', 'found_entries': 'Enter a search term' })
-
-
-# def search(request):
-#     query_string = ''
-#     found_entries = None
-#     if ('q' in request.GET) and request.GET['q'].strip():
-#         query_string = request.GET['q']
-
-#         entry_query = get_query(query_string, ['title', 'content',])
-
-#         found_entries = Entry.objects.filter(entry_query).order_by('-date_posted')
-
-#     return render_to_response('blog/search_results.html',
-#                           { 'query_string': query_string, 'found_entries': found_entries },
-#                           context_instance=RequestContext(request))
-
-# def search(request):
-#     query=None
-#     context=None
-#     results=None
-#     trigram_results=None
-#     result=None
-#     form=SearchForm()
-#     if 'query' in request.GET:
-#         form=SearchForm(request.GET)
-#         if form.is_valid():
-#             query=form.cleaned_data['query']
-#             print(query)
-#             search_vector = SearchVector('title', 'body')
-#             search_query = SearchQuery(query)
-#             result=Post(search=search_vector,rank=SearchRank(search_vector,search_query)).filter(search=search_query).order_by('-rank')
-#             trigram_results=Post.published.annotate(similarity=TrigramSimilarity('title',query)).filter(similarity__gt=0.3).order_by('-similarity')
-#     context={'form':form,'results':trigram_results,'result':result,'query':query}
-#     template='blog/search.html'
-#     return render(request,template,context)
-
-#
-# #
-# Handle 404 Errors
-# @param request WSGIRequest list with all HTTP Request
-# def error404(request,exception):
-
-#     # 1. Load models for this view
-#     #from idgsupply.models import My404Method
-
-#     # 2. Generate Content for this view
-#     template = loader.get_template('blog/error_404.html')
-#     context = Context({
-#         'message': 'All: %s' % request,
-#         })
-
-#     # 3. Return Template for this view + Data
-#     return HttpResponse(content=template.render(context), content_type='text/html; charset=utf-8', status=404)
-
-# def notfound(request, exception):
-#     return render(request,'blog/error_404.html')
-#
 
 def error_404_view(request, exception):
     data = {"name": "Cue"}
@@ -268,3 +213,13 @@ def listallusers(request):
     #paginator = Paginator(post_list, per_page=3)
     return render(request, 'blog/AllUsers.html', {'all_users': all_users,})
 
+
+# on July 7
+# def submission(request, pk):
+#     submission = get_object_or_404(Post, pk=int(pk))
+#     pk = int(pk)
+#
+#     return render('')
+    # return render_to_response('post.html',
+    #                           {'submission':submission},
+    #                           context_instance=RequestContext(request))

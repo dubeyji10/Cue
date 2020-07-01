@@ -3,6 +3,7 @@
 import os
 import sys
 
+from six import python_2_unicode_compatible
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'first_project.settings')
